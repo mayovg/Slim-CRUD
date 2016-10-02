@@ -1,11 +1,11 @@
 <?php
 
 /**
- * CRUD del microframework Slim usado como ejemplo para exposición.
- * Tecnologías para Desarrollos en Internet.
+ * CRUD del microframework Slim usado como ejemplo para la exposición.
+ * <b>Tecnologías para Desarrollos en Internet.</b>
  * 2017-1
  * @author Luis Pablo Mayo
- * @link https://github.com/pmy0v/hivecrud
+ * @see https://github.com/pmy0v/hivecrud
  */
 
 
@@ -26,6 +26,15 @@ pl_autoload_register(function ($classname) {
 /* Manejando dependencias con Monolog y una conexión de PDO a mysql/mariadb. */
 $container = $app->getContainer();
 
+/* Conexión con la base de datos */
+$container['db'] = function ($c) {
+    $db = $c['settings']['db'];
+    $pdo = new PDO("mysql:host=" . $db['host'] . ";dbname=" . $db['dbname'],
+        $db['user'], $db['pass']);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    return $pdo;
+};
 
 /* Crea un objeto de Slim app para iniciar a desarrollar con Slim. 
    Además, especifica donde se guardarán las configuraciones de la app para acceder a ellas después 
