@@ -1,16 +1,18 @@
-<h3 align="center"><img src="hvsf.png"></h3>
-<h3 align="center"><img src="favicon.png"></h3>
+<h3 align="center"><img src="resources/images/hvsf.png"></h3>
+<h3 align="center"><img src="resources/images/favicon.png"></h3>
 
 <h1 align="center">Slim PHP Micro Framework</h1>
 <h2 align="center">Manual para hacer CRUD</h2>
 
-** Contenido de este manual ** <br>
-1. [Prerequisitos](#prerequisitos-para-usar-slim)<br>
+### Contenido de este manual
+1. [Prerrequisitos](#prerrequisitos-para-usar-slim)<br>
 2. [Instalación](#instalación)<br>
-3. [Referencias](#referencias)<br>
+3. [Primeras consideraciones](#primeras-consideraciones)</br>
+4. [Referencias](#referencias)<br>
 
 
-### Prerequisitos para usar Slim
+
+### Prerrequisitos para usar Slim
 
 - PHP 5.5 o posterior
 - Un servidor web con reescritura de URLs (el de PHP es suficiente).
@@ -79,7 +81,10 @@ Al revisar el directorio donde instalamos el framework podemos notar que se crea
 ```
 	vendor/*
 ```
-*Es tiempo de comenzar a escribir el código de nuestro proyecto.*
+
+### Primeras consideraciones 
+
+**Es tiempo de comenzar a escribir el código de nuestro proyecto.**
 
 Una buena ventaja de Slim es que te proporciona un esqueleto básico para agilizar el desarrollo de tu aplicación, esto se hace mediante el comando `php composer.phar create-project slim/slim-skeleton [nombre-de-mi-app]` y composer creará todos los directorios y archivos necesarios para que empieces a trabajar directamente en tu app. Sin embargo, en este manual nos enfocamos en la creación de cada uno de los componentes para conocer mejor su funcionamiento.
 
