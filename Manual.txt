@@ -1,0 +1,62 @@
+\documentclass[10pt]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{tabularx}
+\usepackage{parskip}
+\usepackage{amssymb}% http://ctan.org/pkg/amssymb
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\usepackage{amsmath}
+\usepackage{minted}
+\begin{document}
+\title{Tecnolog\'ias para Desarrollos en Internet \\ Pr\'actica jQuery}
+\author{Luis Pablo Mayo Vega \\ 310292829}
+\date{06/09/2016}
+\maketitle
+\section*{Ejercicios}
+\subsection*{1. Adem\'as del m\'etodo size().¿Qu\'e proporciona jQuery para contar los elementos de una p\'agina Web y c\'omo funciona? Ejemplifica tu respuesta}
+
+.length que es una función que regresa el n\'umero de elementos en  objeto de jQuery: \\
+\\
+\indent \textdollar(selector).length \to Integer
+\\
+Ejemplo: \\
+
+\begin{listing}[H]
+\begin{minted}{js}
+ 	//Cuenta el numero de divs del documento 
+	function cuentaDiv () {
+	    var cuenta = $('div').length;
+   		$('span').text("hay "+ cuenta +"divs");
+  	}.trigger('click');
+\end{minted}
+\end{listing}
+
+\subsection*{3. ¿Cu\'ales son las diferencias entre los m\'etodos text() y html() de jQuery? Ejemplifica el uso de html ().}
+La principal diferencia entre text() y html () es que text() trata al valor que recibe como texto plano mientras que html () lo trata como texto en formato de html con sus etiquetas correspondientes.\\ 
+
+Ejemplo: el siguiente codigo de jQuery \\
+
+\begin{listing}[H]
+\begin{minted}{js}
+	/*funcion que regresa el valor de html() de un div */
+	function ejemHTML (){
+		alert("el html dentro del div es "+ $("#miDiv").html());	
+	}
+
+	/*funcion que regresa el valor text() de un div */
+	function ejemText () {
+		alert("el texto dentro del div es "+ $("#miDiv").text());	
+	}
+\end{minted}
+\end{listing}
+en el siguiente html \\
+\begin{minted}{html}
+	<div id="miDiv">
+		<span>Esto es un texto cualquiera</span>
+	</div>
+\end{minted}
+
+tendr\'iamos que al aplicar {\bf html ()} nos dar\'ia como resultado \mint{html}|<span>Esto es un texto cualquiera</span>| mientras que al aplicar {\bf text ()} obtendr\'iamos \textit{\textbf{''Esto es un texto cualquiera''}} como resultado
+\subsection*{9. ¿cu\'ales son las diferencias entre :first y first-child?}
+:first selecciona  \'unicamente el primer elemento que encuentre de acuerdo a lo que se le especifica, adem\'as no es parte de la especificaci\'on de CSS ya que solo se encuentra en jQuery. Por el otro lado, first-child, que se encuentra tanto en jQuery como en CSS, seleccionar\'a todos los elementos que sean el primer hijo de su padre, por lo que puede seleccionar m\'as de uno.
+\end{document}

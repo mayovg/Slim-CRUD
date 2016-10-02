@@ -5,7 +5,7 @@
 
 - PHP 5.5 o posterior
 - Un servidor web con reescritura de URLs (el de PHP es suficiente).
-- Sistema Manejador de Bases de Datos MariaDB [^1](Mariadbcom. (2016). Mariadbcom. Retrieved 25 September, 2016, from https://mariadb.com/blog/why-should-you-migrate-mysql-mariadb).
+- Sistema Manejador de Bases de Datos MariaDB <sup>[1](#foot1)</sup>.
 - El Contenedor de Inyección de Dependencias Monolog.
 
 
@@ -24,7 +24,7 @@ el proyecto que tenga la siguiente estructura.
 ```
 
 Ahora tenemos que instalar Slim; la manera recomendada por sus desarrolladores es mediante PHP Composer. 
-Para instalar Composer podemos descargar directamente el archivo composer.phar desde [getcomposer.org/download/](https://getcomposer.org/download/) y guardarlo en el directorio `src/` del proyecto  o si se prefiere, se puede usar el siguiente script[^2](How to install Composer programmatically?#. (n.d.). Retrieved September 25, 2016, from https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md):
+Para instalar Composer podemos descargar directamente el archivo composer.phar desde [getcomposer.org/download/](https://getcomposer.org/download/) y guardarlo en el directorio `src/` del proyecto  o si se prefiere, se puede usar el siguiente script<sup>[2](#foot2)</sup>:
 
 ```sh
 #!/bin/sh
@@ -69,7 +69,8 @@ Al revisar el directorio donde instalamos el framework podemos notar que se crea
 	vendor/*
 ```
 
-
+<a name="foot1">1</a>: Mariadbcom. (2016). Mariadbcom. Retrieved 25 September, 2016, from https://mariadb.com/blog/why-should-you-migrate-mysql-mariadb
+<a name="foot2">2</a>: How to install Composer programmatically?#. (n.d.). Retrieved September 25, 2016, from https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md
 
 
 
