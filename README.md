@@ -1,11 +1,12 @@
-# Slim PHP Framework
+# Slim PHP Micro Framework
 ## Manual para hacer CRUD
 
-###Prerequisitos para usar Slim Framework
+###Requisitos para usar Slim Framework
 
 - PHP 5.5 o posterior
-- Un servidor web con reescritura de URLs (Apache, Nginx, HipHop Virtual Machine, ISS, lighttpd o el servidor de PHP).
-
+- Un servidor web con reescritura de URLs (el de PHP es suficiente).
+- Sistema Manejador de Bases de Datos MariaDB [^1](Mariadbcom. (2016). Mariadbcom. Retrieved 25 September, 2016, from https://mariadb.com/blog/why-should-you-migrate-mysql-mariadb).
+- El Contenedor de Inyección de Dependencias Monolog.
 
 
 Para comenzar, creamos un directorio para 
@@ -22,8 +23,8 @@ el proyecto que tenga la siguiente estructura.
 	mkdir proyecto/src/public
 ```
 
-Ahora tenemos que instalar Slim Framework; la manera recomendada por sus desarrolladores es mediante PHP Composer. 
-Para instalar Composer podemos descargar directamente el archivo composer.phar desde [getcomposer.org/download/](https://getcomposer.org/download/) y guardarlo en el directorio src/ del proyecto  o si se prefiere, se puede usar el siguiente script: 
+Ahora tenemos que instalar Slim; la manera recomendada por sus desarrolladores es mediante PHP Composer. 
+Para instalar Composer podemos descargar directamente el archivo composer.phar desde [getcomposer.org/download/](https://getcomposer.org/download/) y guardarlo en el directorio `src/` del proyecto  o si se prefiere, se puede usar el siguiente script[^2](How to install Composer programmatically?#. (n.d.). Retrieved September 25, 2016, from https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md):
 
 ```sh
 #!/bin/sh
@@ -45,6 +46,18 @@ else
 fi
 
 ```
+y  guardarlo como `install-composer.sh` para ejecutarlos en terminal con el comando 
+
+```
+	$	sh install-composer.sh
+```
+
+Si deseas usar globalmente Composer debes mover el archivo composer.phar a la carpeta `/usr/local/bin/` con el comando 
+
+```
+	# 	mv composer.phar /usr/local/bin/composer
+```
+de este modo podrás llamar a Composer escribiendo solo `composer` en consola en vez de `php composer.phar`.
 
 Después de haber instalado Composer, basta con escribir el comando `php composer.phar require slim/slim` para instalar el framework.
 **Si se descargó manualmente, se debe estar en el directorio donde se guardó el archivo `composer.phar` para poder ejecutarlo.**
@@ -55,7 +68,6 @@ Al revisar el directorio donde instalamos el framework podemos notar que se crea
 ```
 	vendor/*
 ```
-
 
 
 
