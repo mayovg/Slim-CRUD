@@ -36,9 +36,18 @@ $container['db'] = function ($c) {
     return $pdo;
 };
 
+/*Configuraciones para Slim*/
+$config['displayErrorDetails'] = true; //Para obtener información sobre errores
+$config['addContentLengthHeader'] = false; //le permite al servidor ajustar el Content-length header
+
+/*configuración de la base de datos*/
+$config['db']['host']   = "localhost";
+$config['db']['user']   = "user";
+$config['db']['pass']   = "password";
+$config['db']['dbname'] = "exampleapp";
+
 /* Crea un objeto de Slim app para iniciar a desarrollar con Slim. 
-   Además, especifica donde se guardarán las configuraciones de la app para acceder a ellas después 
-   si es necesario.*/
+   Además, especifica donde se guardarán las configuraciones de la app para acceder a ellas después si es necesario.*/
 $app = new \Slim\App (["settings" => $config]);
 
 /* la función get() nos permite hacer una solicitud GET a /hola/{nombre}*/
