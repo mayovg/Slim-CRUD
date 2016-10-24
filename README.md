@@ -1,45 +1,42 @@
-<h3 align="center"><img src="resources/images/hvsf.png"></h3>
-<h3 align="center"><img src="resources/images/favicon.png"></h3>
-
-<h1 align="center">Slim PHP Micro Framework</h1>
+<h3 align="center"><img src="resources/images/favicon.png" style="width=40px"></h3>
+<h1 align="center">Slim Micro Framework</h1>
 <h2 align="center">Manual para hacer CRUD</h2>
 
 ### Contenido de este manual
-1. [Prerrequisitos](#prerrequisitos-para-usar-slim)<br>
-2. [Instalación](#instalación)<br>
-3. [Primeras consideraciones](#primeras-consideraciones)</br>
-4. [Referencias](#referencias)<br>
+1. [Prerrequisitos](#prerrequisitos)<br>
+2. [Instalación](#instalacion)<br>
+3. [Creación de Base de datos](#bdd)<br>
+3.1. [Método en consola](#consola)<br>
+3.2. [Método usando phpmyAdmin](#phpmyadmin)<br>
+4. [Configuración de Slim](#config)<br>
+5. [Referencias](#referencias)<br>
 
 
-
+<section id="prerrequisitos">
 ### Prerrequisitos para usar Slim
 
-- PHP 5.5 o posterior
-- Un servidor web con reescritura de URLs (el de PHP es suficiente).
-- Sistema Manejador de Bases de Datos MariaDB <sup>[1](#foot1)</sup>.
-- El Contenedor de Inyección de Dependencias Monolog.
+	- PHP 5.5 o posterior
+	- Un servidor web con reescritura de URLs 
+	- Sistema Manejador de Bases de Datos MariaDB <sup>[1](#foot1)</sup> / MySQL.
+</section>
 
-
-Para comenzar, creamos un directorio para 
-el proyecto que tenga la siguiente estructura.
-
-```
-	├── proyecto
-	│   └── src
-	│       └── public
-
-```
-
-```sh
-	mkdir proyecto/src/public
-```
-
+<section id="instalacion">
 ### Instalación
 
-Ahora tenemos que instalar Slim; la manera recomendada por sus desarrolladores es mediante PHP Composer. 
-Para instalar Composer podemos descargar directamente el archivo composer.phar desde [getcomposer.org/download/](https://getcomposer.org/download/) y guardarlo en el directorio `src/` del proyecto  o si se prefiere, se puede usar el siguiente script<sup>[2](#foot2)</sup>:
+La manera para instalar Slim recomendada por sus desarrolladores es mediante PHP Composer.
 
-```sh
+#### Instalación de Composer 
+
+Para instalar Composer escribimos en consola el siguiente comando:
+
+```
+	$ curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+```
+
+
+o si se prefiere, se puede usar el siguiente script<sup>[2](#foot2)</sup>:
+
+```
 #!/bin/sh
 
 EXPECTED_SIGNATURE=$(wget https://composer.github.io/installer.sig -O - -q)
@@ -59,41 +56,145 @@ else
 fi
 
 ```
-y  guardarlo como `install-composer.sh` para ejecutarlo en terminal con el comando 
+Guardado como `install-composer.sh` para ejecutarlo en terminal con el comando 
 
 ```
 	$	sh install-composer.sh
 ```
 
-Si deseas usar globalmente Composer debes mover el archivo composer.phar a la carpeta `/usr/local/bin/` con el comando 
+**Nota**: Mediante este método, podemos mantener actualizado Composer, pero debes mover el archivo composer.phar a la carpeta `/usr/local/bin/` con el comando 
 
 ```
 	# 	mv composer.phar /usr/local/bin/composer
 ```
-de este modo podrás ejecutar Composer escribiendo solo `composer` en consola en vez de `php composer.phar`.
+de este modo podrás ejecutar Composer escribiendo solo `composer` en consola en vez de `php <Directorio>composer.phar`.
 
-Después de haber instalado Composer, basta con escribir el comando `php composer.phar require slim/slim` para instalar el framework.
-*Si se descargó manualmente, se debe estar en el directorio donde se guardó el archivo `composer.phar` para poder ejecutarlo.*
-Al ejecutar el comando anterior, se agregará Slim Framework como dependencia en el archivo `composer.json` (si no se tiene el archivo se creará). Además, se ejecutará el comando `composer install` para que las dependencias puedan estar disponibles en la aplicación.
 
-Al revisar el directorio donde instalamos el framework podemos notar que se crearon los archivos `composer.json`, `composer.lock` y el directorio `vendor/`. Composer es el encargado de manejar estas dependencias y no nos conviene incluirlas en nuestro repositorio por lo que crearemos un archivo `.gitignore` en nuestro directorio (si aún no existe) y le agregaremos la siguiente linea:
+#### Instalación de Slim
+
+Una buena ventaja de Slim es que proporciona un esqueleto básico sobre el que puedes comenzar a escribir tu aplicación, solo tienes que escribir en consola lo siguiente: 
 
 ```
-	vendor/*
+	$ composer create-proyect slim/slim-skeleton crud-slim
 ```
 
-### Primeras consideraciones 
+Esto creará un nuevo directorio `crud-slim`con los archivos necesarios para comenzar a escribir la aplicación.
 
-**Es tiempo de comenzar a escribir el código de nuestro proyecto.**
+**Estructura del directorio** 
 
-Una buena ventaja de Slim es que te proporciona un esqueleto básico para agilizar el desarrollo de tu aplicación, esto se hace mediante el comando `php composer.phar create-project slim/slim-skeleton [nombre-de-mi-app]` y composer creará todos los directorios y archivos necesarios para que empieces a trabajar directamente en tu app. Sin embargo, en este manual nos enfocamos en la creación de cada uno de los componentes para conocer mejor su funcionamiento.
+```
+crud-slim
+├── composer.json
+├── composer.lock
+├── CONTRIBUTING.md
+├── dirstruct.txt
+├── logs
+│   ├── app.log
+│   └── README.md
+├── phpunit.xml
+├── public
+│   └── index.php
+├── README.md
+├── src
+│   ├── dependencies.php
+│   ├── middleware.php
+│   ├── routes.php
+│   └── settings.php
+├── templates
+│   └── index.phtml
+├── tests
+│   └── Functional
+│       ├── BaseTestCase.php
+│       └── HomepageTest.php
+└── vendor/...
+
+```
+
+**Nota:** el directorio `vendor/` contiene muchos subdirectorios pero no es recomendado editar ninguno de los archivos que se contienen aquí ya que aquí está todo lo que composer maneja por nosotros y editarlos causaría daños en el proyecto.
+
+Si ejecutamos `composer start`en el directorio de nuestra aplicación y abrimos nuestro navegador en la dirección `localhost:8080` aparecerá la siguiente vista
+<img alt="vista inicial del esqueleto de Slim" src="resources/images/esqueleto.png">
+
+</section>
+
+<section id="bdd">
+### Creación de Base de datos
+
+<section id="consola">
+
+#### Método en Consola
+Creamos una base de datos con el nombre `slim` 
+
+```
+$ mysql -u[nombre-de-usuario] -p
+> CREATE DATABASE slim;
+> \u slim
+```
+
+Agregamos la tabla `usuario`.
+
+```
+>  CREATE TABLE usuario (`id` BIGINT NOT NULL AUTO_INCREMENT, `nombre` VARCHAR (250) NOT NULL, `correo` VARCHAR (250) NOT NULL, `clave_acceso` VARCHAR (250) NOT NULL, PRIMARY KEY (`id`));
+```
+</section>
+
+<section id="phpmyadmin">
+#### Método con phpMyAdmin
+
+Creamos la base de datos que usaremos para el crud:
+	<img src="resources/images/1.png" alt="Creación de base de datos">
+
+Creamos la tabla de usuarios:
+	<img src="resources/images/2.png" alt="Creación de tabla usuario">
+</section>
+
+</section>
+
+<a name="config">
+### Configuración de Slim
+</a>
+Ahora que tenemos la base de datos, hay que agregarla a la configuración de Slim. Para esto, abrimos el archivo `settings.php` que  se encuentra en el directorio `src` y que contiene lo siguiente:
+
+```
+<?php
+return [
+    'settings' => [
+        'displayErrorDetails' => true, // set to false in production
+        'addContentLengthHeader' => false, // Allow the web server to send the content-length header
+
+        // Renderer settings
+        'renderer' => [
+            'template_path' => __DIR__ . '/../templates/',
+        ],
+
+        // Monolog settings
+        'logger' => [
+            'name' => 'slim-app',
+            'path' => __DIR__ . '/../logs/app.log',
+            'level' => \Monolog\Logger::DEBUG,
+        ],
+    ],
+];
+
+```
+agregamos después de  `logger` la configuración de nuestra base de datos
+
+```
+
+	//Configuración de base de datos para Slim
+	'db' => [
+		'host' => 'localhost',
+		'user' => '<tu nombre de usuario en mysql>',
+		'password' => '<tu contraseña>',
+		'dbname' => 'slim'
+		'port' => 10862 //el puerto donde esté activo mysql
+		],
+		
+```
+
 
 
 ### Referencias
 > <a name="foot1">1</a>: Mariadbcom. (2016). Mariadbcom. Retrieved 25 September, 2016, from https://mariadb.com/blog/why-should-you-migrate-mysql-mariadb. <br>
 > <a name="foot2">2</a>: How to install Composer programmatically?#. (n.d.). Retrieved September 25, 2016, from https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md. <br>
-
-
-
-
 
