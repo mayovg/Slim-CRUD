@@ -14,9 +14,9 @@
 
 ### Prerrequisitos para usar Slim
 
-	- PHP 5.5 o posterior
-	- Un servidor web con reescritura de URLs 
-	- Sistema Manejador de Bases de Datos MySQL / MariaDB <sup>[1](#foot1)</sup>.
+- PHP 5.5 o posterior
+- Un servidor web con reescritura de URLs 
+- Sistema Manejador de Bases de Datos MySQL/MariaDB<sup>[1](#foot1)</sup
 
 
 ### Instalación
@@ -129,7 +129,11 @@ $ mysql -u[nombre-de-usuario] -p
 Agregamos la tabla `usuario`.
 
 ```sql
->  CREATE TABLE usuario (`id` BIGINT NOT NULL AUTO_INCREMENT, `nombre` VARCHAR (250) NOT NULL, `correo` VARCHAR (250) NOT NULL, `clave_acceso` VARCHAR (250) NOT NULL, PRIMARY KEY (`id`));
+>  CREATE TABLE usuario (`id` BIGINT NOT NULL AUTO_INCREMENT,
+	                     `nombre` VARCHAR (250) NOT NULL,
+						 `correo` VARCHAR (250) NOT NULL,
+						 `clave_acceso` VARCHAR (250) NOT NULL,
+						 PRIMARY KEY (`id`));
 ```
 
 #### Método con phpMyAdmin
@@ -184,10 +188,74 @@ agregamos después de  `logger` la configuración de nuestra base de datos
 		
 ```
 
+### Modelo
+
+Ahora hay que crear el _Modelo_ para la aplicación. Aunque Slim no sigue el patrón de diseño MVC (Modelo-Vista-Controlador) de un modo convencional, nos conviene tener un directorio exclusivo para cada componente, así que creamos un directorio para el modelo dentro de `src/`con nuestro explorador de archivos o con el comando `mkdir model` desde el directorio `src`.
+
+Una vez estando en el directorio `model` creamos un archivo `db.php` para conectarnos a la base de datos usando la extensión PDO<sup>[3](#foot3)</sup> de PHP.
+
+```php
+
+<?php
+
+/**
+* función para conectar con la base de datos
+* @param type $db - la configuración de la base de datos dada para Slim
+*/
+
+function conectaBD($db){
+	$dbh = null; //auxiliar para la conexión
+	try{
+		//crea una cadena con la información dada en el archivo settings.php
+		$conn_str = "mysql:host={$db['host']};port={$db['port']};dbname={$db['dbname']}";
+		//crea instancia de PDO con la configuración para la base de datos
+        $dbh = new PDO($conn_str, $db['user'], $db['password']);
+		return $dbh;
+    } catch (PDOException $e) {
+        die("No se pudo conectar a la base de datos ".$e);
+    }
+}
+
+	}
+}
+
+```
+
+### Controlador
+
+Entonces podemos empezar a escribir las funciones del controlador para el CRUD en un archivo al que, preferiblemente, llamaremos `usuario.php`.
+
+#### Crear
+Recordemos que la tabla usuario tiene como atributos una _id_, un _nombre_,un _correo_ y una _contraseña_. Como `id` es un atributo auto incrementable, solo necesitamos ingresar los otros 3 campos a la base de datos y lo haremos con esta función:
+
+```php
+
+/**
+* función para crear/agregar usuarios a la base de datos
+* @param type $dbh - la instancia de PDO para realizar las consultas
+* @param type $usuario - el usuario a crear
+*/
+
+if(!function_exists('creaUsuario')){ //php marcaba errores si no hacia esta validación
+	function creaUsuario($dbh, $usuario){
+		try{
+			//crea una query para preparar la inserción
+			
+			$q
+		}
+	}
+
+
+}
+
+```
+
+
 
 
 ### Referencias
 
 > <a name="foot1">1</a>: Mariadbcom. (2016). Mariadbcom. Retrieved 25 September, 2016, from https://mariadb.com/blog/why-should-you-migrate-mysql-mariadb. <br>
 > <a name="foot2">2</a>: How to install Composer programmatically?#. (n.d.). Retrieved September 25, 2016, from https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md. <br>
+> <a name="foot3">3</a>: PHP: PDO - Manual. (2016). Retrieved from http://php.net/manual/en/book.pdo.php. <br>
 
