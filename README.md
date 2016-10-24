@@ -3,12 +3,12 @@
 <h2 align="center">Manual para hacer CRUD</h2>
 
 ### Contenido de este manual
-1. [Prerrequisitos](#prerrequisitos)<br>
-2. [Instalación](#instalacion)<br>
-3. [Creación de Base de datos](#bdd)<br>
-3.1. [Método en consola](#consola)<br>
-3.2. [Método usando phpmyAdmin](#phpmyadmin)<br>
-4. [Configuración de Slim](#config)<br>
+1. [Prerrequisitos](#prerrequisitos-para-usar-slim)<br>
+2. [Instalación](#instalación)<br>
+3. [Creación de Base de datos](#creación-de-base-de-datos)<br>
+3.1. [Método en consola](#método-en-consola)<br>
+3.2. [Método usando phpmyAdmin](#método-usando-phpmyadmin)<br>
+4. [Configuración de Slim](#configuración-de-slim)<br>
 5. [Referencias](#referencias)<br>
 
 
@@ -17,7 +17,7 @@
 
 	- PHP 5.5 o posterior
 	- Un servidor web con reescritura de URLs 
-	- Sistema Manejador de Bases de Datos MariaDB <sup>[1](#foot1)</sup> / MySQL.
+	- Sistema Manejador de Bases de Datos MySQL/MariaDB<sup>[1](#foot1)</sup>
 </section>
 
 <section id="instalacion">
@@ -36,7 +36,7 @@ Para instalar Composer escribimos en consola el siguiente comando:
 
 o si se prefiere, se puede usar el siguiente script<sup>[2](#foot2)</sup>:
 
-```
+```sh
 #!/bin/sh
 
 EXPECTED_SIGNATURE=$(wget https://composer.github.io/installer.sig -O - -q)
@@ -133,7 +133,7 @@ $ mysql -u[nombre-de-usuario] -p
 
 Agregamos la tabla `usuario`.
 
-```
+```sql
 >  CREATE TABLE usuario (`id` BIGINT NOT NULL AUTO_INCREMENT, `nombre` VARCHAR (250) NOT NULL, `correo` VARCHAR (250) NOT NULL, `clave_acceso` VARCHAR (250) NOT NULL, PRIMARY KEY (`id`));
 ```
 </section>
@@ -155,7 +155,7 @@ Creamos la tabla de usuarios:
 </a>
 Ahora que tenemos la base de datos, hay que agregarla a la configuración de Slim. Para esto, abrimos el archivo `settings.php` que  se encuentra en el directorio `src` y que contiene lo siguiente:
 
-```
+```php
 <?php
 return [
     'settings' => [
@@ -176,7 +176,7 @@ return [
     ],
 ];
 
-```
+```php
 agregamos después de  `logger` la configuración de nuestra base de datos
 
 ```
