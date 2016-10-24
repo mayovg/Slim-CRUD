@@ -9,7 +9,9 @@
 3.1. [Método en consola](#método-en-consola)<br>
 3.2. [Método usando phpmyAdmin](#método-con-phpmyadmin)<br>
 4. [Configuración de Slim](#configuración-de-slim)<br>
-5. [Referencias](#referencias)<br>
+5. [Modelo](#modelo)<br>
+6. [Controlador](#controlador)<br>
+7. [Referencias](#referencias)<br>
 
 
 ### Prerrequisitos para usar Slim
@@ -126,10 +128,10 @@ $ mysql -u[nombre-de-usuario] -p
 > \u slim
 ```
 
-Agregamos la tabla `usuario`.
+Agregamos la tabla `usuarios`.
 
 ```sql
->  CREATE TABLE usuario (`id` BIGINT NOT NULL AUTO_INCREMENT,
+>  CREATE TABLE usuarios (`id` BIGINT NOT NULL AUTO_INCREMENT,
 	                     `nombre` VARCHAR (250) NOT NULL,
 						 `correo` VARCHAR (250) NOT NULL,
 						 `clave_acceso` VARCHAR (250) NOT NULL,
@@ -142,7 +144,7 @@ Creamos la base de datos que usaremos para el crud:
 	<img src="resources/images/1.png" alt="Creación de base de datos">
 
 Creamos la tabla de usuarios:
-	<img src="resources/images/2.png" alt="Creación de tabla usuario">
+	<img src="resources/images/2.png" alt="Creación de tabla usuarios">
 
 
 
@@ -240,17 +242,21 @@ if(!function_exists('creaUsuario')){ //php marcaba errores si no hacia esta vali
 	function creaUsuario($dbh, $usuario){
 		try{
 			//crea una query para preparar la inserción
+			$q = "INSERT INTO usuarios SET nombre := nombre, correo := correo, clave_acceso := clave_acceso";
+			$stmt = $dbh->prepare($q); //prepara la inserción para ejecutarse
 			
-			$q
-		}
+			//une cada parámetro con su valor 
+			$stmt->bindValue(':nombre', $usuario['nombre'], PDO::PARAM_STR);
+			$stmt->bindValue(':correo', $usuario['correo'], PDO::PARAM_STR);		
+			$stmt->bindValue(':clave_acceso', $usuario['clave_acceso'], PDO::PARAM_STR);	 
+			//ejecuta la inserción
+			$stmt->execute();
+			return $dbh->lastInsertId(); //Regresa la id de la última entidad guardada en la base de datos	
+		} catch (PDO Exception $e) {die($e);}			
 	}
-
-
 }
 
 ```
-
-
 
 
 ### Referencias
