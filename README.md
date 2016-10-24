@@ -7,20 +7,18 @@
 2. [Instalación](#instalación)<br>
 3. [Creación de Base de datos](#creación-de-base-de-datos)<br>
 3.1. [Método en consola](#método-en-consola)<br>
-3.2. [Método usando phpmyAdmin](#método-usando-phpmyadmin)<br>
+3.2. [Método usando phpmyAdmin](#método-con-phpmyadmin)<br>
 4. [Configuración de Slim](#configuración-de-slim)<br>
 5. [Referencias](#referencias)<br>
 
 
-<section id="prerrequisitos">
 ### Prerrequisitos para usar Slim
 
 	- PHP 5.5 o posterior
 	- Un servidor web con reescritura de URLs 
-	- Sistema Manejador de Bases de Datos MySQL/MariaDB<sup>[1](#foot1)</sup>
-</section>
+	- Sistema Manejador de Bases de Datos MySQL / MariaDB <sup>[1](#foot1)</sup>.
 
-<section id="instalacion">
+
 ### Instalación
 
 La manera para instalar Slim recomendada por sus desarrolladores es mediante PHP Composer.
@@ -115,12 +113,9 @@ crud-slim
 Si ejecutamos `composer start`en el directorio de nuestra aplicación y abrimos nuestro navegador en la dirección `localhost:8080` aparecerá la siguiente vista
 <img alt="vista inicial del esqueleto de Slim" src="resources/images/esqueleto.png">
 
-</section>
 
-<section id="bdd">
 ### Creación de Base de datos
 
-<section id="consola">
 
 #### Método en Consola
 Creamos una base de datos con el nombre `slim` 
@@ -136,9 +131,7 @@ Agregamos la tabla `usuario`.
 ```sql
 >  CREATE TABLE usuario (`id` BIGINT NOT NULL AUTO_INCREMENT, `nombre` VARCHAR (250) NOT NULL, `correo` VARCHAR (250) NOT NULL, `clave_acceso` VARCHAR (250) NOT NULL, PRIMARY KEY (`id`));
 ```
-</section>
 
-<section id="phpmyadmin">
 #### Método con phpMyAdmin
 
 Creamos la base de datos que usaremos para el crud:
@@ -146,13 +139,11 @@ Creamos la base de datos que usaremos para el crud:
 
 Creamos la tabla de usuarios:
 	<img src="resources/images/2.png" alt="Creación de tabla usuario">
-</section>
 
-</section>
 
-<a name="config">
+
 ### Configuración de Slim
-</a>
+
 Ahora que tenemos la base de datos, hay que agregarla a la configuración de Slim. Para esto, abrimos el archivo `settings.php` que  se encuentra en el directorio `src` y que contiene lo siguiente:
 
 ```php
@@ -176,10 +167,11 @@ return [
     ],
 ];
 
-```php
+
+``` 
 agregamos después de  `logger` la configuración de nuestra base de datos
 
-```
+```php
 
 	//Configuración de base de datos para Slim
 	'db' => [
@@ -195,6 +187,7 @@ agregamos después de  `logger` la configuración de nuestra base de datos
 
 
 ### Referencias
+
 > <a name="foot1">1</a>: Mariadbcom. (2016). Mariadbcom. Retrieved 25 September, 2016, from https://mariadb.com/blog/why-should-you-migrate-mysql-mariadb. <br>
 > <a name="foot2">2</a>: How to install Composer programmatically?#. (n.d.). Retrieved September 25, 2016, from https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md. <br>
 
