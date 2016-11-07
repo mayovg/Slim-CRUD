@@ -20,9 +20,9 @@
 - PHP 5.5 o posterior
 - Un servidor web con reescritura de URLs 
 - Sistema Manejador de Bases de Datos MySQL/MariaDB<sup>[1](#foot1)</sup>
-- Eloquent (ORM)
+- Eloquent (ORM) de Laravel
 - Respect Validation
-- Twig templates
+- Twig templates de Symfony
 
 
 
@@ -84,11 +84,11 @@ de este modo podrás ejecutar Composer escribiendo solo `composer` en consola en
 
 ##### Microsoft Windows 
 
-Si eres usuario de Windows debes descargar el archivo `Composer-Setup.*.exe` del repositorio oficial de Composer en Github, que está en [https://github.com/composer/windows-setup/releases/tag/v4.5.0](https://github.com/composer/windows-setup/releases/tag/v4.5.0) y seguir las instrucciones que te da el instalador.
+Si eres usuario de Windows debes descargar el archivo `Composer-Setup.*.exe` del repositorio oficial de Composer en Github, que está en [https://github.com/composer/windows-setup/releases/](https://github.com/composer/windows-setup/releases/tag/v4.5.0) y seguir las instrucciones que te de el instalador.
 
 #### Instalación de Slim
 
-Podemos crear un proyecto desde cero o usar el esqueleto que proporciona Slim, sobre el que puedes comenzar a escribir tu aplicación a partir de una configuración sencilla, solo tienes que escribir en consola lo siguiente: 
+Podemos crear un proyecto desde cero o usar el esqueleto que proporciona Slim, el cual nos da una configuración sencilla para empezar la aplicación, solo tienes que escribir en consola lo siguiente: 
 
 ```
 	$ composer create-proyect slim/slim-skeleton crud-slim
@@ -206,6 +206,15 @@ agregamos después del campo  `logger` la configuración de nuestra base de dato
 		],
 		
 ```
+Además, para cargar automáticamente las clases que crearemos más adelante, debemos agregar en el archivo `composer.json` un mapeo _autoload_ con la convención **PSR-4** de php.
+
+```javascript
+    "autoload": {
+	"psr-4": {
+	    "App\\": "src/"
+		}
+    }
+```
 
 ### Modelo
 
@@ -237,7 +246,7 @@ Creamos la clase _ModeloUsuario_ dentro del directorio models.
 
  ```php
  <?php
-namespace Models;
+namespace App\Modelos;
 
 //importa Eloquent para usarlo en el modelo
 use Illuminate\Database\Eloquent\Model as Eloquent;
@@ -260,7 +269,7 @@ También crearemos un directorio `controllers` dentro de `src`para los controlad
 ```php
 <?php
 
-namespace Controllers;
+namespace App\Controladores;
 
 use \Slim\Container;
 
@@ -268,7 +277,7 @@ use \Slim\Container;
  * Clase de controlador genérico que sirve como base para la aplicación
  */
 
-class Controller
+class Controlador
 {
 
     // el contenedor de inyección de dependencias de la aplicación
@@ -335,22 +344,6 @@ class Controller
         }
         return self::encode($error);
     }
-			
-    /**
-     * Evalua una lista de validaciones
-     * @param type array $valid - lista de validaciones
-     */
-    public static function valida($valid)
-    {
-        if (is_array($valid){
-            foreach($valid as $v){
-                if ($v == false){
-                    return false; // regresa false si una validación es falsa
-                } 
-            } 
-            return true;
-        } else { return false; } // si no recibió un arreglo
-    }
 }
 ```
 
@@ -364,11 +357,11 @@ Ahora creamos el controlador para el usuario, también el directorio `controller
 
 ```php
 <?php
-
-use Models; // para usar el modelo de usuario
+namespace App\Controladores;
+use App\Modelos; // para usar el modelo de usuario
 use Respect\Validation\Validator as valida; // para usar el validador de Respect
 
-class ControladorUsuario extends Controller
+class ControladorUsuario extends Controlador
 {
 
     /**
@@ -406,6 +399,12 @@ class ControladorUsuario extends Controller
     }
 }
 
+```
+También hay que agregar el _ControladorUsuario_ al _Contenedor de Inyección de Dependencias_ de nuestro CRUD.
+```php
+$container['ControladorUsuario'] = function($container){
+	return new App\Controladores\ControladorUsuario($container);
+};
 ```
 #### Crear
 Recordemos que la tabla usuario tiene como atributos una _id_, un _nombre_,un _correo_ y una _contraseña_. Como `id` es un atributo auto incrementable, solo neces
