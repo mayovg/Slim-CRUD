@@ -18,11 +18,14 @@ return [
 
         // Base de datos
         'db' => [
+            'driver' => 'mysql',
             'host' => 'localhost',
             'user' => 'user',
             'password' => 'password',
             'dbname' => 'slim',
-            'port' => 10862
+            'charset' =>'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
         ],
     ],
 ];

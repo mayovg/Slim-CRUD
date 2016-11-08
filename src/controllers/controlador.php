@@ -27,6 +27,20 @@ class Controller
         $this->container = $container;
     }
 
+    /**
+     *  
+     */ 
+	/**
+	* función para obtener una propiedad dentro de un contenedor
+	* @param type object $property - propiedad buscada
+	*/
+	public function __get($property)
+	{
+		// si el contenedor de la aplicación contiene la propiedad, la regresa
+		if($this->$container->{property}){
+			return $this->$container->{property};
+		}
+	}
     
     /**
      * Toma la variable del método GET de una petición http
