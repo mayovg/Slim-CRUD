@@ -555,11 +555,11 @@ En nuestra aplicación, las rutas se encuentran en el archivo `src/routes.php` q
 Las rutas que solo manejar solicitudes HTTP _GET_ usan el método `get()` de Slim, que recibe como argumentos un patrón de ruta (con marcadores de posición opcionales) y una función callback que puede provenir de un controlador o declararse dentro de la misma ruta.
 
 ```php
-	$app->get("/", function($request, $response, $args){
-		return $this->view->render($response, 'index.twig');
+	$app->get('/', function($request, $response, $args){
+		return $this->view->render($response, "index.twig");
 	})->setName('inicio');
 ```
-Lo que hace esta ruta es, para el patrón "/" (que sería el patrón iniciar del servidor) llamar a una función que regrese como respuesta la vista definida en el template `index.twig` y a esta ruta le asigna el nombre "inicio" para que las vistas puedan interpretarlas más fácilmente.
+Lo que hace esta ruta es, para el patrón "/" (que sería el patrón inicial del servidor) llamar a una función que regrese como respuesta la vista definida en el template `index.twig` y a esta ruta le asigna el nombre "inicio" para que las vistas puedan interpretarlas más fácilmente.
 
 ```php
 	// ruta para cargar la vista de todos los usuarios registrados
@@ -572,12 +572,12 @@ Lo que hace esta ruta es, para el patrón "/" (que sería el patrón iniciar del
 	empleando la función buscaUsuarioID() de la clase ControladorUsuario, 
 	previamente agregada al CID de la aplicación
 	*/
-	$app->get('/listaUsuarios/{id},"ControladorUsuario:buscaUsuarioID")->setName('usuario.ver');
+	$app->get('/listaUsuarios/{id}','ControladorUsuario:buscaUsuarioID')->setName('usuario.ver');
 	
 	// ruta para cargar el formulario para crear usuario
 	$app->get('/nuevo', function($request, $response, $args){
 		return $this->view->render($response, 'formulario_crea.twig');
-	})->setName('usuario.nuevo');
+	})->setName('usuario.crear');
 
 	// ruta para cargar el formulario para actualizar usuario
 	$app->get('/listaUsuarios/{id}/actualiza', function($request, $response, $args){
@@ -601,13 +601,13 @@ Se puede notar que esta ruta no uso la función `setName()` pues al haber ya una
 Para _PATCH_ también se cumple lo mencionado antes para _GET_ y _POST_. Entonces, para actualizar, tendríamos algo de este estilo:
 ```php
 	// ruta para actualizar un usuario
-	$app->patch("listaUsuarios/{id}", "ControladorUsuario:actualiza")->setName('usuario.actualizar');
+	$app->patch('listaUsuarios/{id}', 'ControladorUsuario:actualiza')->setName('usuario.actualizar');
 ```
 #### DELETE
 
 ```php
 	// ruta para eliminar un usuario
-	$app->delete("listaUsuario/{id}", "ControladorUsuario:elimina")->setName('usuario.eliminar');
+	$app->delete('listaUsuario/{id}', 'ControladorUsuario:elimina')->setName('usuario.eliminar');
 ```
 
 ### Vista
@@ -653,14 +653,12 @@ Como el diseño de **Twig** se basa en plantillas, podemos crear una plantilla b
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	
-	{% block stylesheets }
+	{% block stylesheets %}
 	
 	{# Aquí incluimos los archivos CSS o CDN de CSS que usemos #}
 	<link href="url de cdn" type="text/css" rel="stylesheet" />
 	
-	{# 
-	la función base_url() le indica a twig que busque desde el directorio raíz de proyecto
-	#}
+	{# la función base_url() le indica a twig que busque desde el directorio raíz de proyecto #}
 	
 	<link href="{{ base_url() }}/directorio/de/css" type="text/css" rel="stylesheet" />
 	
@@ -800,8 +798,9 @@ Recuerda que la premisa de este framework es usar solo lo que consideres necesar
 > <a name="foot1">1</a>: Mariadbcom. (2016). Mariadbcom. Retrieved 25 September, 2016, from https://mariadb.com/blog/why-should-you-migrate-mysql-mariadb. <br>
 > <a name="foot2">2</a>: How to install Composer programmatically?#. (n.d.). Retrieved September 25, 2016, from https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md. <br>
 > <a name="foot3">3</a>:Eloquent: Getting Started - Laravel - The PHP Framework For Web Artisans. (n.d.). Retrieved September 29, 2016, from https://laravel.com/docs/5.1/eloquent <br>
-> <a name="foot4">4</a>: Effective Validation with Respect. Retrieved September 30, 2016, from https://websec.io/2013/04/01/Effective-Validation-with-Respect.html <br
->
-> <a name="foot5">5</a>: N. (2016). FastRoute. Retrieved 12 October, 2016, from https://github.com/nikic/FastRoute 
+> <a name="foot4">4</a>: Effective Validation with Respect. Retrieved September 30, 2016, from https://websec.io/2013/04/01/Effective-Validation-with-Respect.html <br>
+> <a name="foot5">5</a>: N. (2016). FastRoute. Retrieved 12 October, 2016, from https://github.com/nikic/FastRoute<br>
+> Codecourse (2016, April 13). Authentication with Slim 3 Retrieved from https://www.youtube.com/playlist?list=PLfdtiltiRHWGc_yY90XRdq6mRww042aEC <br>
+> Rob Allen’s DevNotes. (2016, July 28). Retrieved November 08, 2016, from https://akrabat.com/category/slim-framework/ <br>
 
 
